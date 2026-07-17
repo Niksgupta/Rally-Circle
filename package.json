@@ -1,0 +1,19 @@
+{
+  "name": "recess",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Recess — sports community platform (web + mobile). Take your recess.",
+  "packageManager": "pnpm@11.13.1",
+  "scripts": {
+    "web": "pnpm --filter @pp/web dev",
+    "web:build": "pnpm --filter @pp/web build",
+    "mobile": "pnpm --filter @pp/mobile start",
+    "mobile:ios": "pnpm --filter @pp/mobile ios",
+    "mobile:android": "pnpm --filter @pp/mobile android",
+    "shared:build": "pnpm --filter @pp/shared build",
+    "lint": "pnpm -r lint"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

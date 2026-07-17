@@ -1,0 +1,16 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+# Skip the pre-run "install is up-to-date" check that fails when build scripts
+# are pending approval. We explicitly whitelist the ones we trust below.
+verifyDepsBeforeRun: false
+
+onlyBuiltDependencies:
+  - "@firebase/util"
+  - "esbuild"
+  - "protobufjs"
+allowBuilds:
+  '@firebase/util': set this to true or false
+  esbuild: set this to true or false
+  protobufjs: set this to true or false
