@@ -1,14 +1,10 @@
 import { Outlet } from "react-router-dom";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
-import { ConfigBanner } from "./ConfigBanner";
-import { useAuth } from "../context/AuthContext";
 
 export function Layout() {
-  const { configured } = useAuth();
   return (
-    <div className="flex min-h-full flex-col">
-      {!configured && <ConfigBanner />}
+    <div className="flex min-h-full flex-col bg-[#f4ede1] text-[#3d2b1f]">
       <Navbar />
       <main className="flex-1">
         <Outlet />
