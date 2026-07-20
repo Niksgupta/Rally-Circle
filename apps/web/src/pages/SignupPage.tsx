@@ -1,7 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container } from "../components/Container";
-import { loadRazorpayScript } from "../lib/razorpay";
 
 type BookingData = {
   name: string;
@@ -37,94 +36,15 @@ export function SignupPage() {
       gender,
       level,
       createdAt: Date.now(),
-      paymentStatus: "pending",
+      // Demo deploy: skip external payment provider and treat booking as confirmed.
+      paymentStatus: "success",
     };
+
+    // Persist the booking locally so Success/Failure pages can read it.
     window.sessionStorage.setItem("rallyCircleBooking", JSON.stringify(bookingPayload));
 
-    const orderResponse = await fetch("/api/create-order", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name, mobile, gender, level }),
-    });
-
-    const orderData = await orderResponse.json();
-    if (!orderResponse.ok || !orderData.orderId) {
-      setBusy(false);
-      window.sessionStorage.setItem(
-        "rallyCircleBooking",
-        JSON.stringify({ ...bookingPayload, paymentStatus: "failed" }),
-      );
-      nav("/failure");
-      return;
-    }
-
-    const loaded = await loadRazorpayScript();
-    if (!loaded || !window.Razorpay) {
-      setBusy(false);
-      window.sessionStorage.setItem(
-        "rallyCircleBooking",
-        JSON.stringify({ ...bookingPayload, paymentStatus: "failed" }),
-      );
-      nav("/failure");
-      return;
-    }
-
-    const options = {
-      key: orderData.keyId,
-      amount: orderData.amount,
-      currency: orderData.currency,
-      name: "Rally Circle",
-      description: "Badminton booking + coffee",
-      image: "https://www.rallycircle.app/logo.png",
-      order_id: orderData.orderId,
-      prefill: {
-        name,
-        contact: mobile,
-      },
-      notes: {
-        gender,
-        level,
-        product: "Rally Circle booking",
-      },
-      theme: {
-        color: "#8a5c3d",
-      },
-      handler: function (response: any) {
-        const successfulBooking: BookingData = {
-          ...bookingPayload,
-          paymentStatus: "success",
-          paymentId: response.razorpay_payment_id,
-          orderId: response.razorpay_order_id,
-        };
-        window.sessionStorage.setItem("rallyCircleBooking", JSON.stringify(successfulBooking));
-        nav("/success");
-      },
-      modal: {
-        ondismiss: function () {
-          const failedBooking: BookingData = {
-            ...bookingPayload,
-            paymentStatus: "failed",
-          };
-          window.sessionStorage.setItem("rallyCircleBooking", JSON.stringify(failedBooking));
-          setBusy(false);
-          nav("/failure");
-        },
-      },
-    };
-
-    const paymentObject = new window.Razorpay(options);
-    paymentObject.on("payment.failed", function () {
-      const failedBooking: BookingData = {
-        ...bookingPayload,
-        paymentStatus: "failed",
-      };
-      window.sessionStorage.setItem("rallyCircleBooking", JSON.stringify(failedBooking));
-      nav("/failure");
-    });
-
-    paymentObject.open();
+    // Small UX delay then navigate to success page.
+    setTimeout(() => nav("/success"), 300);
   };
 
   return (
