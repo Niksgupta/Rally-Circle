@@ -32,3 +32,4 @@ pnpm-debug.log*
 # Firebase
 firebase-debug.log
 .firebase/
+.vercel
