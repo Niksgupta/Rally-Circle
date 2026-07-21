@@ -61,7 +61,7 @@ export function HomePage() {
               <span className="text-[#8a5c3d]">🏸 Badminton</span> hangout in Pune - 🤝 team pair, play, 🧋coffee ke saath.
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-8 text-[#5b4536] fade-in-up" style={{ animationDelay: "0.15s" }}>
-              Register once, pay ₹349, and we’ll pair you with new players for a match and a coffee after the game.
+              Register once, and we’ll pair you with new players for a match and a coffee after the game.
             </p>
             <div className="mt-10 flex flex-wrap gap-3 fade-in-up" style={{ animationDelay: "0.3s" }}>
               <Link to="/register" className="btn-primary btn-animated">
@@ -76,7 +76,7 @@ export function HomePage() {
           <div className="overflow-hidden rounded-[2rem] bg-[#e8d7c4] p-6 shadow-soft animate-float">
             <img
               className="h-96 w-full rounded-[1.5rem] object-cover"
-              src="https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=1200&q=80"
+              src={"/hero.jpeg"}
               alt="Badminton players in a social group"
             />
           </div>
