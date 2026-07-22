@@ -21,6 +21,9 @@ export function SignupPage() {
   const [gender, setGender] = useState("male");
   const [level, setLevel] = useState("beginner");
   const [busy, setBusy] = useState(false);
+  const [isProceedToPay, setIsProceedToPay] = useState(false);
+  const [isPaid, setIsPaid] = useState(false);
+  const [transactionID, setTransactionID] = useState("")
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -28,7 +31,7 @@ export function SignupPage() {
       setMobileError("Enter a valid 10-digit Indian mobile number");
       return;
     }
-
+ setIsProceedToPay(true);
     setBusy(true);
     const bookingPayload: BookingData = {
       name,
@@ -44,7 +47,7 @@ export function SignupPage() {
     window.sessionStorage.setItem("rallyCircleBooking", JSON.stringify(bookingPayload));
 
     // Small UX delay then navigate to success page.
-    setTimeout(() => nav("/success"), 300);
+    //setTimeout(() => nav("/success"), 300);
   };
 
   return (
@@ -140,10 +143,54 @@ export function SignupPage() {
               disabled={busy || !name}
               title={name ? "Proceed to payment" : "Fill your name to continue"}
             >
-              {busy ? "Redirecting to payment…" : "Book your slot @ just ₹349"}
+              {busy ? "Redirected to payment…" : "Proceed to Payment ₹349"}
             </button>
+             
           </form>
+{isProceedToPay &&<> <div>
+              <div><label className="label" htmlFor="name">
+                Scan Below QR Code to book your slot
+              </label>
+              <img src="/QRCode.jpeg" alt="QRCode" className=" h-35 w-35 rounded-2xl object-cover" />
+              </div>
+              <br></br>
 
+ <div>
+              <label className="label" htmlFor="mobile">
+               Transaction ID
+              </label>
+              <div className="flex items-center gap-3">
+                <input
+                  id="transactionId"
+                  inputMode="numeric"
+                  value={transactionID}
+                  onChange={(e) => {
+                    const v = e.target.value.replace(/\D/g, "").slice(0, 10);
+                    setTransactionID(v);
+                  }}
+                  required
+                  className="input flex-1"
+                  placeholder="643649836492"
+                />
+              {/* {mobileError ? <p className="mt-2 text-sm text-red-600">{mobileError}</p> : null} */}
+              {/* <p className="mt-2 text-sm text-[#5b4536]">We will use this number to share match updates and the WhatsApp group link after booking.</p> */}
+            </div>
+              <br></br>
+              {
+              transactionID && <> <button
+              type="button"
+              className="btn-primary btn-animated w-full"
+              disabled={!transactionID}
+              title={"I've Paid"}
+              onClick={()=> nav("/success")}
+            >I've Paid</button></>
+                
+              }
+             
+            </div>
+            </div>
+            </>
+            }
           <div className="mt-8 rounded-3xl bg-[#f7efe6] p-6 text-[#5b4536]">
             <p className="font-semibold">What happens next?</p>
             <ul className="mt-3 space-y-2 text-sm">

@@ -47,7 +47,7 @@ export function SuccessPage() {
           <p className="text-sm uppercase tracking-[0.2em] text-[#8a5c3d]">Booking confirmed</p>
           <h1 className="mt-4 text-3xl font-bold">You’re booked, {booking.name}!</h1>
           <p className="mt-3 text-[#5b4536]">
-            Your slot has been confirmed. Click the link below to join our WhatsApp community for match details and updates.
+            Your slot has been booked. Click the link below to join our WhatsApp community for match details and updates.
           </p>
 
           <div className="mt-8 rounded-3xl bg-[#f7efe6] p-8 text-[#5b4536]">
