@@ -11,6 +11,7 @@ type BookingData = {
   paymentStatus: "pending" | "success" | "failed";
   paymentId?: string;
   orderId?: string;
+  transactionID?: strings
 };
 
 export function SignupPage() {
@@ -140,7 +141,7 @@ export function SignupPage() {
             <button
               type="submit"
               className="btn-primary btn-animated w-full"
-              disabled={busy || !name}
+              disabled={true}
               title={name ? "Proceed to payment" : "Fill your name to continue"}
             >
               {busy ? "Redirected to payment…" : "Proceed to Payment ₹349"}
