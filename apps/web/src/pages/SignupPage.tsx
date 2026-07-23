@@ -75,7 +75,7 @@ export function SignupPage() {
                 onChange={(e) => setName(e.target.value)}
                 required
                 className="input"
-                placeholder="Ananya Sharma"
+                placeholder="Enter your full name"
               />
             </div>
 
@@ -96,7 +96,7 @@ export function SignupPage() {
                   }}
                   required
                   className="input flex-1"
-                  placeholder="98765 43210"
+                  placeholder="Enter your 10-digit mobile number"
                 />
               </div>
               {mobileError ? <p className="mt-2 text-sm text-red-600">{mobileError}</p> : null}
@@ -154,10 +154,13 @@ export function SignupPage() {
               <img src="/QRCode.jpeg" alt="QRCode" className=" h-35 w-35 rounded-2xl object-cover" />
               </div>
               <br></br>
-
+            
+              UPI ID : 7733997488@ybl
+<br></br>
+<br></br>
  <div>
               <label className="label" htmlFor="mobile">
-               Transaction ID
+               If you have paid, Please enter Transaction ID to confirm your booking
               </label>
               <div className="flex items-center gap-3">
                 <input
@@ -165,7 +168,7 @@ export function SignupPage() {
                   inputMode="numeric"
                   value={transactionID}
                   onChange={(e) => {
-                    const v = e.target.value.replace(/\D/g, "").slice(0, 10);
+                    const v = e.target.value.replace(/\D/g, "").slice(0, 12);
                     setTransactionID(v);
                   }}
                   required
@@ -177,10 +180,10 @@ export function SignupPage() {
             </div>
               <br></br>
               {
-              transactionID && <> <button
+              transactionID  && <> <button
               type="button"
               className="btn-primary btn-animated w-full"
-              disabled={!transactionID}
+              disabled={transactionID.length !==12}
               title={"I've Paid"}
               onClick={()=> nav("/success")}
             >I've Paid</button></>

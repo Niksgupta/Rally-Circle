@@ -31,10 +31,12 @@ export function Footer() {
               <MapPin className="h-4 w-4 text-[#8a5c3d]" /> Pune, Maharashtra
             </li>
             <li className="inline-flex items-center gap-2">
-              <Mail className="h-4 w-4 text-[#8a5c3d]" /> hello@rallycircle.in
+              <Mail className="h-4 w-4 text-[#8a5c3d]" /> puneplaymakers@gmail.com
             </li>
             <li className="inline-flex items-center gap-2">
-              <Instagram className="h-4 w-4 text-[#8a5c3d]" /> @rallycircle.in
+              <a href="https://www.instagram.com/rally.circle?utm_source=qr" target="_blank" rel="noreferrer" className="hover:text-[#8a5c3d]">
+               Follow us on Instagram
+              </a>
             </li>
             <li className="inline-flex items-center gap-2">
               <MessageCircle className="h-4 w-4 text-[#8a5c3d]" />
