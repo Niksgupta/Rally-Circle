@@ -19,13 +19,12 @@ export function SuccessPage() {
   const [booking, setBooking] = useState<BookingData | null>(null);
 
   useEffect(() => {
+    window.scrollTo(0, 0)
     const raw = window.sessionStorage.getItem("rallyCircleBooking");
-    console.log("raw", raw,);
     if (!raw) {
       navigate("/register", { replace: true });
       return;
     }
-
       const stored = location.state?.registration;
       console.log("stored", stored);
         setBooking(stored[0]);

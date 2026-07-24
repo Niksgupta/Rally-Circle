@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container } from "../components/Container";
 import { supabase } from "../lib/supabase";
@@ -140,17 +140,24 @@ export function SignupPage() {
         "rallyCircleBooking",
         JSON.stringify(insertedRegistrationData),
       );
-setTimeout(() => nav("/success", {
-        state: {
-          registration: insertedRegistrationData,
-        },
-      }), 300);
+      setTimeout(
+        () =>
+          nav("/success", {
+            state: {
+              registration: insertedRegistrationData,
+            },
+          }),
+        300,
+      );
     } catch (error: any) {
       alert(error.message || "Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
   };
+ useEffect(()=>{
+ window.scrollTo(0, 0)
+  },[nav])
   return (
     <section className="relative overflow-hidden py-16 text-[#3d2b1f]">
       <div className="bg-circle left-[-1rem] top-10 h-32 w-32 bg-[#f2d7b1] blur-3xl animate-float" />
