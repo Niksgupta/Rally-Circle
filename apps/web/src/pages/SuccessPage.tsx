@@ -8,6 +8,9 @@ interface BookingData {
   gender: string;
   level: string;
   createdAt: number;
+  paymentStatus: "pending" | "success" | "failed";
+  orderId?: string;
+  transactionID?: string;
 }
 
 export function SuccessPage() {
@@ -17,37 +20,27 @@ export function SuccessPage() {
 
   useEffect(() => {
     const raw = window.sessionStorage.getItem("rallyCircleBooking");
+    console.log("raw", raw,);
     if (!raw) {
       navigate("/register", { replace: true });
       return;
     }
 
-    try {
-      const stored = JSON.parse(raw) as BookingData | null;
-      if (stored?.name && stored.paymentStatus === "success" && Date.now() - stored.createdAt < 1000 * 60 * 30) {
-        setBooking(stored);
-      } else {
-        window.sessionStorage.removeItem("rallyCircleBooking");
-        navigate("/register", { replace: true });
-      }
-    } catch {
-      window.sessionStorage.removeItem("rallyCircleBooking");
-      navigate("/register", { replace: true });
-    }
+      const stored = location.state?.registration;
+      console.log("stored", stored);
+        setBooking(stored[0]);
+
   }, [navigate]);
 
-  if (!booking) {
-    return null;
-  }
 
   return (
     <section className="py-16 text-[#3d2b1f]">
       <Container>
         <div className="mx-auto max-w-2xl rounded-[2rem] border border-[#d8c7b4] bg-white p-10 shadow-soft">
           <p className="text-sm uppercase tracking-[0.2em] text-[#8a5c3d]">Booking confirmed</p>
-          <h1 className="mt-4 text-3xl font-bold">You’re booked, {booking.name}!</h1>
+          <h1 className="mt-4 text-3xl font-bold">You’re booked, {booking?.name}!</h1>
           <p className="mt-3 text-[#5b4536]">
-            Your slot has been booked. Click the link below to join our WhatsApp community for match details and updates.
+            We’ve received your payment details. Our team will verify it shortly. Meantime you can Click the link below to join our WhatsApp community for match details and updates.
           </p>
 
           <div className="mt-8 rounded-3xl bg-[#f7efe6] p-8 text-[#5b4536]">
