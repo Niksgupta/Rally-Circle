@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { supabase } from "../lib/supabase";
 import { StatsCard } from "../components/admin/StatsCard";
 import { RegistrationTable } from "../components/admin/RegistrationTable";
-
+import {sendConfirmationEmail} from "../services/emailService";
 export interface Registration {
  id: string;
  name: string;
@@ -39,17 +39,29 @@ export default function AdminDashboard() {
 
  setLoading(false);
  }
-
- async function updateStatus(
+async function updateStatus(
  id: string,
  status: "confirmed" | "rejected"
- ) {
+) {
  const ok = window.confirm(
  `Are you sure you want to ${status} this registration?`
  );
 
  if (!ok) return;
 
+ // Fetch registration details
+ const { data: registration, error: registrationError } = await supabase
+ .from("registrations")
+ .select("*")
+ .eq("id", id)
+ .single();
+console.log(registration, "registration details")
+ if (registrationError) {
+ alert(registrationError.message);
+ return;
+ }
+
+ // Update payment status
  const { error } = await supabase
  .from("registrations")
  .update({
@@ -62,8 +74,40 @@ export default function AdminDashboard() {
  return;
  }
 
- fetchRegistrations();
+ // Send email only if confirmed
+ if (status === "confirmed") {
+ const { data: event, error: eventError } = await supabase
+ .from("events")
+ .select("*")
+ .eq("id", registration.event_id)
+ .single();
+console.log(event, "eventtt????")
+ if (!eventError && event && registration.email) {
+    console.log("inside")
+ const sent = await sendConfirmationEmail({
+ toEmail: registration.email,
+ toName: registration.name,
+ eventName: event.name,
+ venue: event.venue,
+ date: event.event_date,
+ fee: event.fee,
+ });
+
+ console.log(sent, "sent or not ?")
+ if (sent) {
+ alert("✅ Registration confirmed and confirmation email sent.");
+ } else {
+ alert(
+ "⚠️ Registration confirmed, but the email could not be sent."
+ );
  }
+ }
+ }
+
+ fetchRegistrations();
+}
+
+
 
  const filteredData = useMemo(() => {
  if (filter === "all") return registrations;

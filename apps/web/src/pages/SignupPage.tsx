@@ -217,6 +217,7 @@ const fetchAvailableSlots = async () => {
  <p>👥 Capacity: {event.capacity}</p>
  <p>💰 ₹{event.fee}</p>
   <p>🗓 {event.event_date}</p>
+  <p> 🕰️ {event.time} </p>
  </div>
 )}
 
