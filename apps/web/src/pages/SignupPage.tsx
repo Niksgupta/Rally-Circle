@@ -18,6 +18,7 @@ export function SignupPage() {
   const nav = useNavigate();
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
+  const [email, setEmail] = useState("");
   const [mobileError, setMobileError] = useState("");
   const [gender, setGender] = useState("male");
   const [level, setLevel] = useState("beginner");
@@ -132,6 +133,7 @@ export function SignupPage() {
             name,
             mobile,
             gender,
+            email, 
             level,
             utr: transactionID,
             payment_status: "pending",
@@ -146,7 +148,7 @@ export function SignupPage() {
 
       window.sessionStorage.setItem(
         "rallyCircleBooking",
-        JSON.stringify(insertedRegistrationData),
+        JSON.stringify({...insertedRegistrationData?.[0] , email} ),
       );
       setTimeout(
         () =>
@@ -312,6 +314,33 @@ const fetchAvailableSlots = async () => {
                 group link after booking.
               </p>
             </div>
+
+
+ <div>
+              <label className="label" htmlFor="mobile">
+               Email Address
+              </label>
+              <div className="flex items-center gap-3">
+               
+                <input
+                  id="email"
+                  value={email}
+                  onChange={(e) => {
+                   setEmail(e.target.value)
+                  }}
+                  required
+                  className="input flex-1"
+                  placeholder="Enter your email address"
+                />
+              </div>
+              {mobileError ? (
+                <p className="mt-2 text-sm text-red-600">{mobileError}</p>
+              ) : null}
+              <p className="mt-2 text-sm text-[#5b4536]">
+                We will use this email to share the confirmation
+              </p>
+            </div>
+
 
             <div className="grid gap-6 sm:grid-cols-2">
               <div>

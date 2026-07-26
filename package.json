@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "description": "Recess — sports community platform (web + mobile). Take your recess.",
-  "packageManager": "pnpm@11.13.1",
+  "packageManager": "pnpm@11.16.0+sha512.b767e9a98fc87aec0f42daefcd0e84941c2cdb45d73c4e1e68860fb2bdfdbe032ab592105479e5e05c237f740c8a5ffdbbb52385797ddc2296745a1bbb883e8d",
   "scripts": {
     "web": "pnpm --filter @pp/web dev",
     "web:build": "pnpm --filter @pp/web build",
@@ -15,5 +15,9 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "dependencies": {
+    "@vercel/node": "^5.8.27",
+    "resend": "^6.18.0"
   }
 }
