@@ -389,6 +389,8 @@ const fetchAvailableSlots = async () => {
             <>
               {" "}
               <div>
+                <br/>
+        
                 <div>
                   <label className="label" htmlFor="name">
                     Scan Below QR Code to book your slot
@@ -398,6 +400,11 @@ const fetchAvailableSlots = async () => {
                     alt="QRCode"
                     className=" h-35 w-35 rounded-2xl object-cover"
                   />
+                 <br></br>
+                  <a href="/QRCode.jpeg" download="RallyCircle-UPI-QR.png">
+                  <button               className="btn-primary btn-animated w-full"
+>Downlaod QR Code</button>
+                  </a>
                 </div>
                 <br></br>
                 UPI ID : 7733997488@ybl
@@ -427,7 +434,7 @@ const fetchAvailableSlots = async () => {
                     {/* <p className="mt-2 text-sm text-[#5b4536]">We will use this number to share match updates and the WhatsApp group link after booking.</p> */}
                   </div>
                   <br></br>
-                  {transactionID && (
+                 
                     <>
                       {" "}
                       <button
@@ -437,10 +444,9 @@ const fetchAvailableSlots = async () => {
                         title={"I've Paid"}
                         onClick={handlePaymentSubmit}
                       >
-                        {loading ? "Submitting" : "I Have Paid"}
+                        {loading ? "Submitting" : "VERIFY PAYMENT"}
                       </button>
-                    </>
-                  )}
+           </>
                 </div>
               </div>
             </>

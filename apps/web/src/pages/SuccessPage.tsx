@@ -70,8 +70,8 @@ export function SuccessPage() {
                 <span>Water bottle</span>
               </li>
               <li className="flex items-center gap-3">
-                <span className="text-xl">🙂</span>
-                <span>Positive attitude</span>
+                <span className="text-xl">🤝</span>
+                <span>Good Vibes</span>
               </li>
             </ul>
           </div>
