@@ -27,6 +27,8 @@
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.15",
     "typescript": "^5.6.3",
-    "vite": "^5.4.21"
+    "vite": "^5.4.21",
+    "@emailjs/browser": "^4.4.1"
+
   }
 }
