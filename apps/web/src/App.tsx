@@ -5,6 +5,9 @@ import { SignupPage } from "./pages/SignupPage";
 import { SuccessPage } from "./pages/SuccessPage";
 import { FailurePage } from "./pages/FailurePage";
 import { NotFoundPage } from "./pages/NotFoundPage";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import { AdminLoginPage } from "./pages/AdminLoginPage";
+import AdminDashboard from "./pages/AdminDashboard";
 
 export default function App() {
   return (
@@ -15,6 +18,8 @@ export default function App() {
         <Route path="success" element={<SuccessPage />} />
         <Route path="failure" element={<FailurePage />} />
         <Route path="*" element={<NotFoundPage />} />
+        <Route path="admin" element={<AdminLoginPage />} />
+        <Route path="admin/dashboard" element={ <ProtectedRoute> <AdminDashboard /></ProtectedRoute>} />
       </Route>
     </Routes>
   );

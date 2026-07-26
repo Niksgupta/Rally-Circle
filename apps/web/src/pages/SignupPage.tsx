@@ -25,6 +25,9 @@ export function SignupPage() {
   const [isProceedToPay, setIsProceedToPay] = useState(false);
   const [transactionID, setTransactionID] = useState("");
   const [loading, setLoading] = useState(false);
+  const [remainingSlots, setRemainingSlots] = useState<number | null>(null);
+  const [loadingSlots, setLoadingSlots ] = useState(true);
+  const [event, setEvent] = useState<any>(null);
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -52,6 +55,11 @@ export function SignupPage() {
   };
 
   const handlePaymentSubmit = async () => {
+    await fetchAvailableSlots();
+    if(remainingSlots !==null && remainingSlots <= 0){
+      alert("Sorry! This event is sold out");
+      return;
+    }
     // Validate UTR
     if (!/^\d{12}$/.test(transactionID)) {
       alert("Please enter a valid 12-digit UTR number.");
@@ -158,13 +166,95 @@ export function SignupPage() {
  useEffect(()=>{
  window.scrollTo(0, 0)
   },[nav])
+
+useEffect(() => {
+ fetchAvailableSlots();
+}, []);
+
+const fetchAvailableSlots = async () => {
+ setLoadingSlots(true);
+
+ // Get active event
+ const { data, error } = await supabase
+        .from("events")
+        .select("*")
+        .eq("status", "open");
+ if (error || !data || data.length === 0) {
+ setLoadingSlots(false);
+ return;
+ }
+ const currentEvent = data[0];
+ setEvent(currentEvent);
+
+ // Count confirmed registrations
+ const { count } = await supabase
+ .from("registrations")
+ .select("*", {
+ count: "exact",
+ head: true,
+ })
+ .eq("event_id", currentEvent.id)
+ .eq("payment_status", "confirmed");
+
+ const confirmed = count ?? 0;
+
+ setRemainingSlots(currentEvent.capacity - confirmed);
+ setLoadingSlots(false);
+};
+
   return (
     <section className="relative overflow-hidden py-16 text-[#3d2b1f]">
       <div className="bg-circle left-[-1rem] top-10 h-32 w-32 bg-[#f2d7b1] blur-3xl animate-float" />
       <div className="bg-circle right-[-1rem] bottom-20 h-44 w-44 bg-[#e8d7c4] blur-3xl animate-blob" />
       <Container>
         <div className="mx-auto max-w-2xl rounded-[2rem] border border-[#d8c7b4] bg-white p-10 shadow-soft relative z-10">
-          <div className="mb-8">
+         {event && (
+ <div className="mb-6 rounded-xl bg-[hashtag#f7efe6] p-4">
+ <h2 className="text-xl font-bold">{event.name}</h2>
+ <p>📍 {event.venue}</p>
+ <p>👥 Capacity: {event.capacity}</p>
+ <p>💰 ₹{event.fee}</p>
+  <p>🗓 {event.event_date}</p>
+ </div>
+)}
+
+{!loadingSlots && remainingSlots !== null && (
+ <div className="mb-6 rounded-xl bg-green-50 border border-green-200 p-4">
+
+ <h3 className="text-lg font-semibold text-green-700">
+ {remainingSlots > 0
+ ? `🔥 Only ${remainingSlots} ${
+ remainingSlots === 1 ? "spot" : "spots"
+ } left`
+ : "❌ Event Sold Out"}
+ </h3>
+
+ </div>
+)}
+
+{
+  remainingSlots === 0  ? (
+ <div className="rounded-xl bg-red-50 border border-red-200 p-6 text-center">
+
+ <h2 className="text-2xl font-bold text-red-600">
+ Event Sold Out
+ </h2>
+
+ <p className="mt-3">
+ All 16 confirmed slots have been booked.
+ </p>
+
+ <p className="mt-2">
+ <a href="https://chat.whatsapp.com/IZnygJh6gOC0KXxj6Ao3Yn" target="_blank" rel="noreferrer" className="hover:text-[#8a5c3d]" color="brown">
+                Join our WhatsApp community
+              </a> to get notified for the next event.
+ </p>
+
+ </div>
+): 
+
+   (<div> 
+     <div className="mb-8">
             <p className="text-sm uppercase tracking-[0.2em] text-[#8a5c3d]">
               Book your slot
             </p>
@@ -172,7 +262,7 @@ export function SignupPage() {
               Register for badminton + coffee
             </h1>
             <p className="mt-3 text-[#5b4536]">
-              Complete the form and pay ₹349. After payment, you’ll see the
+              Complete the form and pay ₹299. After payment, you’ll see the
               WhatsApp community link.
             </p>
           </div>
@@ -252,7 +342,6 @@ export function SignupPage() {
                 >
                   <option value="beginner">Beginner</option>
                   <option value="intermediate">Intermediate</option>
-                  <option value="advanced">Advanced</option>
                 </select>
               </div>
             </div>
@@ -263,7 +352,7 @@ export function SignupPage() {
               disabled={busy || !name}
               title={name ? "Proceed to payment" : "Fill your name to continue"}
             >
-              {busy ? "Redirected to payment…" : "Proceed to Payment ₹349"}
+              {busy ? "Redirected to payment…" : "Proceed to Payment ₹299"}
             </button>
           </form>
           {isProceedToPay && (
@@ -334,6 +423,9 @@ export function SignupPage() {
               <li>• Join the WhatsApp community for final match details.</li>
             </ul>
           </div>
+           </div>
+          )
+}  
         </div>
       </Container>
     </section>

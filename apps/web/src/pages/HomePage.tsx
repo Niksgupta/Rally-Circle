@@ -119,7 +119,7 @@ export function HomePage() {
       <section className="bg-[#efe3d6] py-16">
         <Container className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
-            <h2 className="text-3xl font-bold text-[#3d2b1f]">What ₹349 includes</h2>
+            <h2 className="text-3xl font-bold text-[#3d2b1f]">What ₹299 includes</h2>
             <ul className="mt-6 space-y-4 text-[#5b4536]">
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-[#8a5c3d] mt-1" />
@@ -148,7 +148,7 @@ export function HomePage() {
               <p>3. Join the WhatsApp community for match updates.</p>
             </div>
             <Link to="/register" className="btn-primary mt-8 inline-flex">
-              Book ₹349
+              Book ₹299
             </Link>
           </div>
         </Container>
