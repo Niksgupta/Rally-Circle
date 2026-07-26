@@ -8,9 +8,11 @@ import { NotFoundPage } from "./pages/NotFoundPage";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { AdminLoginPage } from "./pages/AdminLoginPage";
 import AdminDashboard from "./pages/AdminDashboard";
+import FloatingWhatsApp from "./components/FloatingWhatsApp";
 
 export default function App() {
   return (
+    <>
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<HomePage />} />
@@ -22,5 +24,7 @@ export default function App() {
         <Route path="admin/dashboard" element={ <ProtectedRoute> <AdminDashboard /></ProtectedRoute>} />
       </Route>
     </Routes>
+    <FloatingWhatsApp/>
+    </>
   );
 }
