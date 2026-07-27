@@ -412,7 +412,7 @@ const fetchAvailableSlots = async () => {
                   </a>
                 </div>
                 <br></br>
-                UPI ID : 7733997488@ybl
+                UPI ID : sumitdevkar21@oksbi
                 <br></br>
                 <br></br>
                 <div>
