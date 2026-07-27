@@ -389,17 +389,22 @@ const fetchAvailableSlots = async () => {
             <>
               {" "}
               <div>
-                <br/>
-        
-                <div>
-                  <label className="label" htmlFor="name">
+      
+  <div style={{padding: "5px", borderRadius: "10px"}}>
+            <br/>
+      <label className="label" htmlFor="name">
                     Scan Below QR Code to book your slot
                   </label>
                   <img
                     src="/QRCode.jpeg"
                     alt="QRCode"
-                    className=" h-35 w-35 rounded-2xl object-cover"
+                    style={{display:"block", marginLeft:"auto", marginRight:"auto", width:"70%"}}
                   />
+  </div>
+  
+  
+  <div>
+                  
                  <br></br>
                   <a href="/QRCode.jpeg" download="RallyCircle-UPI-QR.png">
                   <button               className="btn-primary btn-animated w-full"
